@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building|Construction|Electricity</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <input type ="checkbox" name ="" id ="chk1">
+        <div class="logo"><img src="Logo.PNG" alt="logo"></div>
+        <div class="search-box">
+            <form>
+                <input type ="text" name ="search" id ="srch" placeholder="Search">
+                <button type ="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Portfolio</a></li>
+            <li><a href="#">Contact</a></li>
+            <li>
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+            </li>
+        </ul>
+        <div class="menu">
+            <label for="chk1">
+                <i class="fa fa-bars"></i>
+            </label>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section class="home" id="home">
+            <br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div class="headline" id="headline">
+                <h1 class="typewrite" data-words='["Building Construction", "Electrical Work", "Civil Engineering"]' data-speed="100" data-delay="1500" data-loop="yes"></h1>
+            </div>
+            <div class="trademarks">
+                <div class="icon"><img src="B-BBEE.png" alt="B-BBEE"></div>
+                <div class="icon"><img src="NHBRC.png" alt="NHBRC"></div>
+                <div class="icon"><img src="BCCEI.png" alt="BCCEI"></div>
+            </div>
+        </section>
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        class typeWriting {
+            constructor(element) {
+                this.element = element; // Selector
+                this.words = JSON.parse(element.getAttribute('data-words')); // Input words
+                this.speed = parseInt(element.getAttribute('data-speed'), 10) || 100; // fallback 100 ms
+                this.delay = parseInt(element.getAttribute('data-delay'), 10) || 1000; // fallback 1000 ms
+                this.loop = element.getAttribute('data-loop');
+                this.char = ''; // word letters
+                this.counter = 0; // loop counter
+                this.isDeleting = false; // check when deleting letters
+                this.type(); // Typing method
+            }
+
+            type() {
+                const index = this.loop === 'yes' ? this.counter % this.words.length : this.counter;
+                const fullWord = this.words[index];
+                let typeSpeed = this.speed;
+
+                if (this.isDeleting) {
+                    typeSpeed /= 2;
+                    this.char = fullWord.substring(0, this.char.length - 1);
+                } else {
+                    this.char = fullWord.substring(0, this.char.length + 1);
+                }
+
+                this.element.innerHTML = `<span class="write">${this.char}</span><span class="blinking-cursor">|</span>`;
+                
+                if (!this.isDeleting && this.char === fullWord) {
+                    if (this.loop === "no" && this.counter >= this.words.length - 1) {
+                        return;
+                    }
+                    this.isDeleting = true;
+                    typeSpeed = this.delay;
+                } else if (this.isDeleting && this.char === '') {
+                    this.isDeleting = false;
+                    this.counter++;
+                }
+                
+                setTimeout(() => this.type(), typeSpeed);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+
+        function init() {
+            document.querySelectorAll('.typewrite').forEach(e => new typeWriting(e));
+        }
+    </script>
+</body>
+</html>
